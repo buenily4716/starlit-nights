@@ -6,7 +6,7 @@
 
   ## 預覽
 
-  🔗 https://你的帳號.github.io/你的repo名稱/
+  🔗 https://buenily4716.github.io/starlit-nights/
 
   ## 功能
 
