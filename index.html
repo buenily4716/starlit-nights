@@ -16,7 +16,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=LXGW+WenKai+TC&family=Noto+Sans+TC:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Sacramento&family=Reenie+Beanie&family=Great+Vibes&family=LXGW+WenKai+TC&family=Noto+Sans+TC:wght@300;400&display=swap" rel="stylesheet">
 <style>
 /* === Reset & Tokens === */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -178,7 +178,7 @@ section{
 .pillar-icon{margin-bottom:10px}
 .pillar-icon svg{width:32px;height:32px}
 .pillar-zh{font-family:'LXGW WenKai TC',cursive;color:#D9A15D;font-size:clamp(0.95rem,2.5vw,1.2rem);margin-bottom:4px}
-.pillar-en{font-family:'Great Vibes',cursive;color:rgba(217,161,93,0.55);font-size:0.88rem;margin-bottom:8px}
+.pillar-en{font-family:'Dancing Script',cursive;color:rgba(217,161,93,0.55);font-size:1.1rem;margin-bottom:8px}
 .pillar-desc{font-size:clamp(0.75rem,1.8vw,0.85rem);color:rgba(248,243,232,0.75);font-weight:300;line-height:1.7}
 
 /* === Timeline Schedule === */
@@ -284,7 +284,7 @@ section{
 @media(max-width:767px){
   .side-nav{width:32px}
   .page-content{margin-left:32px}
-  .side-nav-item{font-size:9px;padding:8px 4px;letter-spacing:1px}
+  .side-nav-item{font-size:12px;padding:10px 4px;letter-spacing:1px}
 }
 
 /* === GSAP reveal base === */
@@ -377,28 +377,8 @@ section{
   display:flex;align-items:center;justify-content:center;
   transition:background 0.2s,transform 0.15s;
 }
-#lb-close:hover{background:rgba(217,161,93,0.28);transform:rotate(90deg)}
+#lb-close:hover{background:rgba(217,161,93,0.28)}
 
-#lb-zoom-ctrl{position:fixed;bottom:14px;right:14px;display:flex;gap:6px;z-index:2001}
-.lb-zoom-btn{
-  width:34px;height:34px;border-radius:8px;
-  background:rgba(217,161,93,0.12);border:1px solid rgba(217,161,93,0.25);
-  color:#D9A15D;font-size:18px;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-  transition:background 0.2s;font-family:monospace;
-}
-.lb-zoom-btn:hover{background:rgba(217,161,93,0.28)}
-
-#lb-hint-text{
-  position:fixed;bottom:16px;left:50%;transform:translateX(-50%);
-  color:rgba(248,243,232,0.28);font-size:0.68rem;letter-spacing:0.08em;white-space:nowrap;
-  font-family:'Noto Sans TC',sans-serif;pointer-events:none;
-}
-#lb-caption{
-  position:fixed;bottom:48px;left:50%;transform:translateX(-50%);
-  color:rgba(248,243,232,0.5);font-size:0.78rem;letter-spacing:0.06em;white-space:nowrap;
-  font-family:'LXGW WenKai TC',cursive;pointer-events:none;
-}
 </style>
 </head>
 <body>
@@ -427,13 +407,6 @@ section{
   <div id="lb-wrap">
     <img id="lb-img" src="" alt="">
   </div>
-  <p id="lb-caption"></p>
-  <div id="lb-zoom-ctrl">
-    <button class="lb-zoom-btn" id="lb-zoom-out" aria-label="縮小">&#x2212;</button>
-    <button class="lb-zoom-btn" id="lb-zoom-reset" aria-label="重置" style="font-size:11px;letter-spacing:0">1:1</button>
-    <button class="lb-zoom-btn" id="lb-zoom-in" aria-label="放大">&#x2b;</button>
-  </div>
-  <p id="lb-hint-text">滾輪縮放 &middot; 拖曳平移 &middot; 雙指縮放 &middot; 雙擊重置</p>
 </div>
 
 <div class="page-content">
@@ -489,7 +462,8 @@ section{
       </div>
       <div class="pillar-zh">山城留白</div>
       <div class="pillar-en">Margin &amp; Movement</div>
-      <p class="pillar-desc">走進自然節奏，低干擾的純粹自由。放下日常步調，讓山風帶路。</p>
+      <p class="pillar-desc">走進自然節奏，低干擾的純粹自由</p>
+	  <p class="pillar-desc">放下日常步調，讓山風帶路</p>
     </div>
     <div class="card pillar-card gs-reveal">
       <div class="pillar-icon">
@@ -497,7 +471,8 @@ section{
       </div>
       <div class="pillar-zh">情感凝聚</div>
       <div class="pillar-en">Bonding &amp; Beyond</div>
-      <p class="pillar-desc">星空營火下打破邊界，真實交流。讓微醺的夜色拉近每一段距離。</p>
+      <p class="pillar-desc">星空營火下打破邊界，真實交流</p>
+	  <p class="pillar-desc">讓微醺的夜色拉近每一段距離</p>
     </div>
     <div class="card pillar-card gs-reveal">
       <div class="pillar-icon">
@@ -505,7 +480,8 @@ section{
       </div>
       <div class="pillar-zh">拾光續航</div>
       <div class="pillar-en">Recharge &amp; Return</div>
-      <p class="pillar-desc">在自然中充電，帶著能量返回。將山間拾起的光，化為日常的續航力。</p>
+      <p class="pillar-desc">在自然中充電，帶著能量返回</p>
+	  <p class="pillar-desc">將山間拾起的光，化為日常的續航力</p>
     </div>
   </div>
 </section>
@@ -520,25 +496,29 @@ section{
       <div class="tl-dot"></div>
       <div class="tl-time">14:00 — 16:00</div>
       <div class="tl-label">Day 1 &middot; 午後</div>
-      <div class="tl-content">報到探索、午後開場。踏入山城，讓第一口空氣替你卸下一切。</div>
+      <div class="tl-content">報到探索、午後開場</div>
+	  <div class="tl-content">踏入山城，讓第一口空氣替你卸下一切</div>
     </div>
     <div class="tl-item">
       <div class="tl-dot"></div>
       <div class="tl-time">14:30 — 16:30</div>
       <div class="tl-label">Day 1 &middot; 午後</div>
-      <div class="tl-content">手作體驗、自由參與。竹筒飯、多肉植物、山城木作，選一個讓雙手忙碌起來。</div>
+      <div class="tl-content">手作體驗、自由參與</div>
+	  <div class="tl-content">選一個活動讓雙手忙碌起來</div>
     </div>
     <div class="tl-item">
       <div class="tl-dot"></div>
       <div class="tl-time">17:00 — 22:00</div>
       <div class="tl-label">Day 1 &middot; 夜晚</div>
-      <div class="tl-content">餐車巡禮、音樂相伴。味蕾與旋律交織的夜晚，星空是最好的天幕。</div>
+      <div class="tl-content">餐車巡禮、音樂相伴</div>
+	  <div class="tl-content">味蕾與旋律交織的夜晚，星空是最好的天幕</div>
     </div>
     <div class="tl-item">
       <div class="tl-dot"></div>
       <div class="tl-time">上午</div>
       <div class="tl-label">Day 2 &middot; 晨間</div>
-      <div class="tl-content">晨間放鬆、收心賦歸。帶著露水與星光的記憶，踏上歸途。</div>
+      <div class="tl-content">晨間放鬆、收心賦歸</div>
+	  <div class="tl-content">帶著露水與星光的記憶，踏上歸途</div>
     </div>
   </div>
 </section>
@@ -564,21 +544,25 @@ section{
         <svg viewBox="0 0 24 24" fill="none" stroke="#D9A15D" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11 L3 3 M7 11 L7 3 M5 3 L5 11"/><path d="M3 11 L7 11"/><path d="M5 11 L5 21"/><path d="M17 3 C17 3 15 7 15 11 L19 11 C19 7 17 3 17 3Z"/><path d="M17 11 L17 21"/></svg>
       </div>
       <div class="village-name">美食聚落</div>
-      <p class="village-desc">餐車美食巡禮，舌尖上的山城風味</p>
+      <p class="village-desc">餐車美食巡禮</p>
+	  <p class="village-desc">舌尖上的山城風味</p>
     </div>
     <div class="card village-card gs-reveal">
       <div class="village-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#D9A15D" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 C7.6 2 4 5.6 4 10 C4 14.4 12 18 12 18 C12 18 20 14.4 20 10 C20 5.6 16.4 2 12 2Z"/><path d="M12 18 L12 22"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="#D9A15D" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M7 12 L3 9 V15 Z M17 12 L21 9 V15 Z"/></svg>
       </div>
       <div class="village-name">童心聚落</div>
-      <p class="village-desc">大人小孩一起放肆，找回純粹的快樂</p>
+      <p class="village-desc">大人小孩一起放肆</p>
+      <p class="village-desc">找回純粹的快樂</p>
+	  
     </div>
     <div class="card village-card gs-reveal">
       <div class="village-icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="#D9A15D" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M8.5 4.5 L20 18 M8.5 19.5 L20 6"/></svg>
       </div>
       <div class="village-name">手作聚落</div>
-      <p class="village-desc">雙手沾滿自然，把山城的溫度帶回家</p>
+      <p class="village-desc">雙手沾滿自然</p>
+	  <p class="village-desc">把山城的溫度帶回家</p>
     </div>
     <div class="card village-card gs-reveal">
       <div class="village-icon">
@@ -591,14 +575,16 @@ section{
         </svg>
       </div>
       <div class="village-name">脈動聚落</div>
-      <p class="village-desc">音樂與節奏，讓身體跟著山的頻率擺動</p>
+      <p class="village-desc">音樂與節奏</p>
+	  <p class="village-desc">讓身體跟著山的頻率擺動</p>
     </div>
     <div class="card village-card gs-reveal">
       <div class="village-icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="#D9A15D" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 8 L22 8 M2 16 L22 16"/><path d="M5 4 L5 8 M9 4 L9 8 M13 4 L13 8 M17 4 L17 8"/><path d="M5 16 L5 20 M9 16 L9 20 M13 16 L13 20 M17 16 L17 20"/></svg>
       </div>
       <div class="village-name">星幕聚落</div>
-      <p class="village-desc">仰望銀河，在星幕下沉入夜的絮語</p>
+      <p class="village-desc">仰望銀河</p>
+	  <p class="village-desc">在星幕下沉入夜的絮語</p>
     </div>
   </div>
 </section>
@@ -611,7 +597,7 @@ section{
   <div class="crafts-grid">
     <div class="card craft-card gs-reveal">
       <div class="craft-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#D9A15D" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="3" width="8" height="18" rx="3"/><path d="M8 7 L16 7 M8 11 L16 11 M8 15 L16 15"/><path d="M10 3 L10 1 M14 3 L14 1"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="#D9A15D" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21 V7 L16 4 V21 Z M8 12 H16"/><path d="M16 10 C18 9 20 7 21 5"/></svg>
       </div>
       <div class="craft-name">竹筒飯製作</div>
       <p class="craft-desc">劈竹、填米、炊煙。用最原始的方式，烹出山城的味道。</p>
@@ -641,25 +627,26 @@ section{
   <div class="night-items">
     <div class="card night-card gs-reveal">
       <div class="night-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#D9A15D" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 3 L21 5 L18 8 L16 6Z"/><path d="M16 6 L11 11"/><ellipse cx="8" cy="16" rx="4" ry="5" transform="rotate(-15 8 16)"/><circle cx="8" cy="16" r="1"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="#D9A15D" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 18 A3 3 0 1 1 9 15 A3 3 0 0 1 12 18 Z M12 15 V3 L20 5 V9 L12 7"/><path d="M5 10 V14 M19 11 V15"/></svg>
       </div>
-      <div class="night-name">音樂表演 Live</div>
+      <div class="night-name">音樂表演</div>
       <p class="night-desc">營火旁的旋律，山谷間的共鳴</p>
     </div>
-    <div class="card night-card gs-reveal">
+        <div class="card night-card gs-reveal">
+      <div class="night-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#D9A15D" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 20 H18 M8 22 L16 18 M12 10 L9 16 H15 Z"/><path d="M6 5 H8 M7 4 V6 M17 7 H19 M18 6 V8"/></svg>
+      </div>
+      <div class="night-name">營火晚會</div>
+      <p class="night-desc">夜深了，來一場溫暖的慰藉</p>
+    </div>
+	<div class="card night-card gs-reveal">
       <div class="night-icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="#D9A15D" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 8 L22 8 M2 16 L22 16"/><path d="M6 4 L6 8 M10 4 L10 8 M14 4 L14 8 M18 4 L18 8"/><path d="M6 16 L6 20 M10 16 L10 20 M14 16 L14 20 M18 16 L18 20"/></svg>
       </div>
       <div class="night-name">星幕電影</div>
       <p class="night-desc">以星空為天花板的露天影院</p>
     </div>
-    <div class="card night-card gs-reveal">
-      <div class="night-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#D9A15D" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18 C4 14 6 12 12 12 C18 12 20 14 20 18Z"/><path d="M2 18 L22 18"/><path d="M8 12 L8 8 C8 6 10 4 12 4 C14 4 16 6 16 8 L16 12"/></svg>
-      </div>
-      <div class="night-name">深夜食堂</div>
-      <p class="night-desc">夜深了，來一碗溫暖的慰藉</p>
-    </div>
+
   </div>
   <div class="photo-row gs-reveal">
     <img src="images/night-campfire.jpg" alt="營火夜景"
@@ -838,11 +825,7 @@ section{
      ====================================== */
   var lbOverlay   = document.getElementById('lb-overlay');
   var lbImg       = document.getElementById('lb-img');
-  var lbCaption   = document.getElementById('lb-caption');
   var lbClose     = document.getElementById('lb-close');
-  var lbZoomIn    = document.getElementById('lb-zoom-in');
-  var lbZoomOut   = document.getElementById('lb-zoom-out');
-  var lbZoomReset = document.getElementById('lb-zoom-reset');
 
   var lbScale  = 1;
   var lbTX     = 0;  /* current translate X */
@@ -865,12 +848,11 @@ section{
   }
 
   /* ---- Open ---- */
-  document.querySelectorAll('[data-lightbox]').forEach(function(img){
+document.querySelectorAll('[data-lightbox]').forEach(function(img){
     img.addEventListener('click', function(e){
       e.stopPropagation();
       lbImg.src = img.src;
       lbImg.alt = img.alt;
-      lbCaption.textContent = img.alt;
       lbScale = 1; lbTX = 0; lbTY = 0;
       applyTransform(false);
       lbOverlay.classList.add('lb-active');
@@ -893,10 +875,6 @@ section{
     if(e.key === 'Escape') closeLightbox();
   });
 
-  /* ---- Button controls ---- */
-  lbZoomIn.addEventListener('click',    function(){ setScale(lbScale + LB_STEP, true); });
-  lbZoomOut.addEventListener('click',   function(){ setScale(lbScale - LB_STEP, true); });
-  lbZoomReset.addEventListener('click', function(){ setScale(1, true); });
 
   /* ---- Desktop: wheel zoom ---- */
   lbOverlay.addEventListener('wheel', function(e){
