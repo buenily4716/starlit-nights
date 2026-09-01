@@ -36,11 +36,6 @@
 html{
   height:100%;
   overflow-y:scroll;
-  /* mandatory 會強迫每次滑動結束都精準停在某個區塊起點，跟手機的慣性捲動物理引擎互搶控制權時，
-     容易在兩個區塊中間卡住停頓一下才繼續吸附；改成 proximity 只在滑動幅度夠接近吸附點時才輕輕帶過去，
-     不會硬性糾正，避免那種卡住又跳的僵持感 */
-  scroll-snap-type:y proximity;
-  overscroll-behavior-y:none; /* 避免手機在頂部下拉的橡皮筋回彈效果跟 scroll-snap 互相干擾 */
 }
 body{
   background:#0D1B3D;color:#F8F3E8;
@@ -86,11 +81,9 @@ body.page-hidden .firefly{animation-play-state:paused}
 /* === Sections === */
 section{
   position:relative;z-index:2;
-  height:100vh;height:100dvh;
-  scroll-snap-align:start;
-  overflow:hidden; /* 跟最原始版本一致：固定一個畫面高度、不建立巢狀捲動容器，避免捲動時的 scroll-chaining 判定成本 */
+  min-height:100vh;min-height:100dvh;
   display:flex;flex-direction:column;
-  align-items:center;justify-content:safe center;
+  align-items:center;justify-content:center;
   padding:72px 20px;
   max-width:860px;margin:0 auto;
   background:transparent;
@@ -120,8 +113,7 @@ section{
    ============================================================ */
 #hero{
   max-width:100%;width:100%;
-  height:100vh;height:100dvh;
-  scroll-snap-align:start;
+  min-height:100vh;min-height:100dvh;
   padding:0;
   position:relative;overflow:hidden;
   display:flex;flex-direction:column;
@@ -215,14 +207,6 @@ section{
 
 /* === Schedule Timeline === */
 .schedule-container{width:100%;max-width:680px;margin:0 auto}
-/* 這個區塊內容（Day1 六個時間軸項目）在較矮的螢幕高度下可能超出一個畫面。
-   不用內部獨立捲動（會跟整頁的捲動分開、體感不一致），改成允許這個區塊自己撐高，
-   一樣用外層同一個視窗捲動過去，只是內容多的時候要多滑一點才會捲完 */
-#schedule{
-  height:auto;
-  min-height:100vh;min-height:100dvh;
-  overflow:visible;
-}
 
 /* Day Switch Tabs */
 .day-switch-tabs{
@@ -1110,14 +1094,12 @@ section{
       lbScale = 1; lbTX = 0; lbTY = 0;
       applyTransform(false);
       lbOverlay.classList.add('lb-active');
-      document.documentElement.style.scrollSnapType = 'none'; /* 開燈箱時關掉整頁的 scroll-snap，避免燈箱裡滾輪縮放跟主頁面吸附互相干擾 */
     });
   });
 
   /* ---- Close ---- */
   function closeLightbox(){
     lbOverlay.classList.remove('lb-active');
-    document.documentElement.style.scrollSnapType = 'y mandatory';
     setTimeout(function(){ lbImg.src = ''; }, 260);
     lbScale = 1; lbTX = 0; lbTY = 0;
   }
