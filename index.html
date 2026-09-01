@@ -752,7 +752,7 @@ section{
     <div class="craft-meta-grid">
       <div class="craft-meta-item">
         <strong>活動時間</strong>
-        9/12 (六) 14:30 – 16:30 (提早5分集合)
+        9/12 (六) 14:30 – 16:30 (提早10分集合)
       </div>
       <div class="craft-meta-item">
         <strong>體驗地點</strong>
@@ -760,7 +760,7 @@ section{
       </div>
       <div class="craft-meta-item">
         <strong>參加方式</strong>
-        事先報名制（請留意報名表）
+        事先報名制（8/31已截止報名）
       </div>
     </div>
   </div>
@@ -989,6 +989,32 @@ section{
   /* === Day Switcher Logic === */
   var dayTabs = document.querySelectorAll('.day-tab-btn');
   var dayBlocks = document.querySelectorAll('.day-block');
+  var dayBlocksWrapper = document.querySelector('.day-blocks-wrapper');
+
+  /* 用 display:none/block 切換後，隱藏的那天不會撐開高度，切換時下面內容會跟著移動；
+     量出兩天內容裡較高的那個，把容器的 min-height 固定住，切換時高度就不會變動 */
+  function measureBlockHeight(el){
+    var wasHidden = !el.classList.contains('active');
+    if(wasHidden) el.style.display = 'block';
+    var h = el.offsetHeight;
+    if(wasHidden) el.style.display = '';
+    return h;
+  }
+  function syncScheduleHeight(){
+    if(!dayBlocksWrapper || !dayBlocks.length) return;
+    var maxH = 0;
+    dayBlocks.forEach(function(b){ maxH = Math.max(maxH, measureBlockHeight(b)); });
+    dayBlocksWrapper.style.minHeight = maxH + 'px';
+  }
+  syncScheduleHeight();
+  window.addEventListener('load', syncScheduleHeight);
+  if(document.fonts) document.fonts.ready.then(syncScheduleHeight);
+  var scheduleResizeTimer = null;
+  window.addEventListener('resize', function(){
+    clearTimeout(scheduleResizeTimer);
+    scheduleResizeTimer = setTimeout(syncScheduleHeight, 200);
+  });
+
   dayTabs.forEach(function(tab){
     tab.addEventListener('click', function(){
       var targetDay = tab.dataset.day;
