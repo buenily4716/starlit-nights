@@ -4,6 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
 <title>星野微醺，拾光有你 — Starlit Nights, Glowing Times</title>
+<script>
+/* 從 LINE 內建瀏覽器開啟時，自動補上 openExternalBrowser=1 導向手機預設瀏覽器，
+   放在 <head> 最前面盡早執行，避免使用者在 LINE 內建瀏覽器裡多停留一段時間 */
+(function(){
+  var ua = navigator.userAgent || '';
+  if(/\bLine\//i.test(ua) && location.href.indexOf('openExternalBrowser=1') === -1){
+    var sep = location.href.indexOf('?') === -1 ? '?' : '&';
+    location.href = location.href + sep + 'openExternalBrowser=1';
+  }
+})();
+</script>
 
 <!-- SEO & 分享預覽 -->
 <meta name="description" content="兩天一夜，走進苗栗三義的山城夜色。09/12–09/13 · 2026">
@@ -230,21 +241,16 @@ section{
   box-shadow:0 0 12px rgba(217,161,93,0.35);
 }
 .day-blocks-wrapper{
-  display:grid;
-  grid-template-columns:1fr;
-  align-items:start;
+  display:block;
 }
+/* 改用 display:none/block 直接切換，不用 opacity/visibility 疊在同一格淡出——
+   後者在部分手機瀏覽器上會有殘影不重繪的問題，display 切換會讓元素直接從畫面上消失，
+   瀏覽器不會有不重繪的模糊地帶 */
 .day-block{
-  grid-area:1 / 1;
-  opacity:0;
-  visibility:hidden;
-  pointer-events:none;
-  transition:opacity 0.25s ease;
+  display:none;
 }
 .day-block.active{
-  opacity:1;
-  visibility:visible;
-  pointer-events:all;
+  display:block;
 }
 
 .day-title-wrap{
@@ -991,9 +997,6 @@ section{
       tab.classList.add('active');
       var activeBlock = document.getElementById(targetDay);
       if(activeBlock) activeBlock.classList.add('active');
-      /* 手機瀏覽器（尤其 iOS Safari）有時不會馬上重繪這種疊圖層切換，要等到下次捲動才「補畫」；
-         強迫讀取一次 offsetHeight 會逼瀏覽器立刻重新計算並重繪，不用等使用者多滑一下畫面才更新 */
-      void document.body.offsetHeight;
     });
   });
 
