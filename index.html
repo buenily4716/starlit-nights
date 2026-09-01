@@ -126,6 +126,9 @@ section{
   position:absolute;inset:0;width:100%;height:100%;
   object-fit:cover;object-position:center;
   z-index:-1;opacity:0.65;
+  transform:translateZ(0);will-change:transform; /* 這張滿版底圖是首頁區塊裡面積最大的圖層，
+  沒有獨立合成層的話，捲出首頁時瀏覽器每個畫格都要重新繪製這張大圖，容易卡；先幫它建立獨立圖層，
+  捲動時只需要搬動現成的畫面，不用重畫 */
 }
 .hero-inner{
   position:relative;z-index:2;
@@ -938,12 +941,9 @@ section{
     });
   });
 
-  /* === 停用滑鼠滾輪／觸控板捲動，只能透過導覽列切換頁面 ===
-     不分螢幕寬度，全面擋掉 wheel 事件：滾輪連續捲動天生就需要好幾個畫格逐步渲染剛捲出來的內容，
-     這是造成「滾輪滑動卡頓」的根本原因，擋掉它才能徹底解決，不再只是緩解。
-     真正手機的手指觸控滑動走的是 touch 事件、不是 wheel，完全不受影響、依然可以自由滑動。 */
+  /* === 電腦版：停用滾輪捲動，只能透過上方導覽列切換頁面（手機維持原本可自由上下滑動） === */
   document.addEventListener('wheel', function(e){
-    e.preventDefault();
+    if(desktopNavOnlyMQ.matches) e.preventDefault();
   }, { passive: false });
 
   function updateActiveNav(){
