@@ -991,6 +991,9 @@ section{
       tab.classList.add('active');
       var activeBlock = document.getElementById(targetDay);
       if(activeBlock) activeBlock.classList.add('active');
+      /* 手機瀏覽器（尤其 iOS Safari）有時不會馬上重繪這種疊圖層切換，要等到下次捲動才「補畫」；
+         強迫讀取一次 offsetHeight 會逼瀏覽器立刻重新計算並重繪，不用等使用者多滑一下畫面才更新 */
+      void document.body.offsetHeight;
     });
   });
 
