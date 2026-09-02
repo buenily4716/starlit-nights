@@ -279,6 +279,31 @@ section{
 .tl-content{font-size:0.82rem;color:rgba(248,243,232,0.7);line-height:1.6}
 .tl-tip{font-size:0.75rem;color:rgba(217,161,93,0.85);margin-top:2px}
 
+/* === Chart Switch Tabs (營區圖，切換不同圖資頁面，跟 Day 切換同一套邏輯) === */
+.chart-switch-tabs{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-bottom:28px;
+}
+.chart-tab-btn{
+  font-family:'LXGW WenKai TC',cursive;
+  background:transparent;
+  border:1px solid rgba(217,161,93,0.4);
+  color:#D9A15D;
+  padding:6px 20px;
+  border-radius:9999px;
+  font-size:0.95rem;
+  cursor:pointer;
+  transition:all 0.3s ease;
+}
+.chart-tab-btn.active{
+  background:#D9A15D;
+  color:#0D1B3D;
+  font-weight:500;
+  box-shadow:0 0 12px rgba(217,161,93,0.35);
+}
+.chart-blocks-wrapper{width:100%}
+.chart-block{display:none}
+.chart-block.active{display:flex;flex-direction:column;align-items:center}
+
 /* === Craft Workshop Focus === */
 .craft-single-card{
   width:100%;max-width:720px;margin:0 auto;text-align:center;padding:36px 28px;
@@ -307,7 +332,7 @@ section{
   display:grid;grid-template-columns:repeat(2,1fr);gap:16px;width:100%;
 }
 @media(max-width:640px){.highlights-grid{grid-template-columns:1fr}}
-.highlight-card{padding:22px;display:flex;flex-direction:column;gap:8px}
+.highlight-card{padding:22px;display:flex;flex-direction:column;gap:8px;cursor:pointer}
 .highlight-head{display:flex;align-items:center;gap:10px}
 .highlight-icon svg{width:24px;height:24px;color:#D9A15D}
 .highlight-title{font-family:'LXGW WenKai TC',cursive;color:#D9A15D;font-size:1.15rem}
@@ -328,10 +353,12 @@ section{
 /* 電腦版：流程圖是直式長圖，改成「點導覽列換頁」後圖片必須整張塞進一個畫面，
    改以高度為準縮放（寬度自動等比縮小），外框直接貼齊圖片本身、不再拉滿容器寬度 */
 @media(min-width:768px){
-  #flow .visual-wrapper{
+  #flow .visual-wrapper,
+  #charts .visual-wrapper{
     width:auto;max-width:100%;
   }
-  #flow .visual-wrapper img{
+  #flow .visual-wrapper img,
+  #charts .visual-wrapper img{
     width:auto;height:auto;
     max-height:calc(100vh - 350px);
     max-width:100%;
@@ -445,6 +472,47 @@ section{
 }
 #lb-close:hover{background:rgba(217,161,93,0.3)}
 
+/* =============================================
+   ACTIVITY DETAIL MODAL（活動亮點卡片點擊後的介紹視窗）
+   ============================================= */
+[data-detail-source]{display:none}
+#detail-overlay{
+  position:fixed;inset:0;z-index:2000;
+  background:rgba(5,10,28,0.85);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  display:flex;align-items:center;justify-content:center;
+  padding:24px;
+  opacity:0;pointer-events:none;
+  transition:opacity 0.25s ease;
+}
+#detail-overlay.detail-active{opacity:1;pointer-events:all}
+#detail-panel{
+  position:relative;
+  width:100%;max-width:640px;max-height:86vh;overflow-y:auto;
+  background:#101E42;
+  border:1px solid rgba(217,161,93,0.3);
+  border-radius:16px;
+  padding:36px 28px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.6);
+}
+#detail-close{
+  position:absolute;top:14px;right:14px;width:36px;height:36px;border-radius:50%;
+  background:rgba(217,161,93,0.15);border:1px solid rgba(217,161,93,0.4);
+  color:#D9A15D;font-size:20px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:background 0.2s;
+}
+#detail-close:hover{background:rgba(217,161,93,0.3)}
+#detail-content .craft-single-card{padding:0;max-width:none}
+#detail-content .detail-title{
+  font-family:'LXGW WenKai TC',cursive;color:#D9A15D;
+  font-size:clamp(1.2rem,3.5vw,1.6rem);margin-bottom:14px;text-align:center;
+}
+#detail-content .detail-desc{
+  font-size:0.92rem;line-height:2;color:rgba(248,243,232,0.85);
+  text-align:justify;text-justify:inter-ideograph;
+}
+
 /* === Scroll Reveal ===
    以原生 IntersectionObserver + CSS transition 取代 GSAP ScrollTrigger：
    不必在每個 scroll 事件裡重新量測元素位置，瀏覽器只在真正需要時通知一次，
@@ -530,13 +598,13 @@ section{
 <!-- 導覽列 -->
 <nav class="side-nav" id="sideNav">
   <button class="side-nav-item active" data-target="hero">首頁</button>
-  <button class="side-nav-item" data-target="concept">主題</button>
+  <button class="side-nav-item" data-target="concept">概念</button>
   <button class="side-nav-item" data-target="pillars">主軸</button>
-  <button class="side-nav-item" data-target="schedule">行程</button>
-  <button class="side-nav-item" data-target="crafts">手作</button>
   <button class="side-nav-item" data-target="highlights">活動</button>
-  <button class="side-nav-item" data-target="map">導覽</button>
+  <button class="side-nav-item" data-target="schedule">行程</button>
   <button class="side-nav-item" data-target="flow">流程</button>
+  <button class="side-nav-item" data-target="map">導覽</button>
+  <button class="side-nav-item" data-target="charts">名單</button>
   <button class="side-nav-item" data-target="info">須知</button>
 </nav>
 
@@ -545,6 +613,14 @@ section{
   <button id="lb-close" aria-label="關閉">&#x2715;</button>
   <div id="lb-wrap">
     <img id="lb-img" src="" alt="">
+  </div>
+</div>
+
+<!-- ACTIVITY DETAIL OVERLAY -->
+<div id="detail-overlay" role="dialog" aria-modal="true" aria-label="活動內容介紹">
+  <div id="detail-panel">
+    <button id="detail-close" aria-label="關閉">&#x2715;</button>
+    <div id="detail-content"></div>
   </div>
 </div>
 
@@ -576,9 +652,11 @@ section{
     <p style="margin-top:16px">在山海間<span class="highlight">留白漫遊</span>，<br>於星光下<span class="highlight">凝聚情感</span>，<br>將回憶轉化為再次前行的<span class="highlight">續航動能</span>。</p>
     <p style="margin-top:16px">兩天一夜，走進苗栗三義的山城夜色裡。</p>
   </div>
-  <div class="concept-location gs-reveal">
+<div class="concept-location gs-reveal">
     <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#D9A15D" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:6px"><path d="M2 20 L7 8 L12 16 L15 10 L22 20Z"/></svg>
-    苗栗三義 &middot; 不遠山莊
+    <a href="https://maps.google.com/?q=苗栗三義不遠山莊&hl=zh-TW" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">
+      苗栗三義 &middot; 不遠山莊
+    </a>
   </div>
 </section>
 
@@ -614,6 +692,108 @@ section{
       <div class="pillar-en">Recharge &amp; Return</div>
       <p class="pillar-desc">在自然中充電，帶著能量返回</p>
       <p class="pillar-desc">將山間拾起的光，化為日常的續航力</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HIGHLIGHTS ============ -->
+<section id="highlights">
+  <p class="poetic-lead gs-reveal">—— 每一刻停留，都是專屬回憶 ——</p>
+  <h2 class="section-title gs-reveal">活動亮點</h2>
+  <p class="section-subtitle gs-reveal">Event Highlights</p>
+
+  <div class="highlights-grid">
+    <div class="card highlight-card gs-reveal" data-detail="detail-feast">
+      <div class="highlight-head">
+        <div class="highlight-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 11 L3 3 M7 11 L7 3 M5 3 L5 11"/><path d="M3 11 L7 11"/><path d="M5 11 L5 21"/><path d="M17 3 C17 3 15 7 15 11 L19 11 C19 7 17 3 17 3Z"/><path d="M17 11 L17 21"/></svg>
+        </div>
+        <div class="highlight-title">全日舌尖饗宴</div>
+      </div>
+      <p class="highlight-desc">特色餐車巡禮、美味外燴、精緻下午茶與消暑冰品，全天候滿足味蕾。</p>
+    </div>
+
+    <div class="card highlight-card gs-reveal" data-detail="detail-party">
+      <div class="highlight-head">
+        <div class="highlight-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M8 21h8m-4-4v4M6 4h12l-2 9H8L6 4z"/></svg>
+        </div>
+        <div class="highlight-title">微醺派對 &amp; 啤酒遊戲</div>
+      </div>
+      <p class="highlight-desc">星空下的 Cheers Time！特調與啤酒無限暢飲，搭配超嗨啤酒互動挑戰！</p>
+    </div>
+
+    <div class="card highlight-card gs-reveal" data-detail="detail-music">
+      <div class="highlight-head">
+        <div class="highlight-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+        </div>
+        <div class="highlight-title">Live Music 不插電演出</div>
+      </div>
+      <p class="highlight-desc">午後山風伴隨悠揚琴聲與旋律，讓歌聲流淌在山谷的每一個角落。</p>
+    </div>
+
+    <div class="card highlight-card gs-reveal" data-detail="detail-hunt">
+      <div class="highlight-head">
+        <div class="highlight-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        </div>
+        <div class="highlight-title">山林尋寶挑戰</div>
+      </div>
+      <p class="highlight-desc">穿梭於營位與山間步道，解開藏在園區裡的驚喜線索。</p>
+    </div>
+
+    <div class="card highlight-card gs-reveal" data-detail="detail-craft" style="grid-column: 1 / -1;">
+      <div class="highlight-head">
+        <div class="highlight-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#D9A15D" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21 V7 L16 4 V21 Z M8 12 H16"></path><path d="M16 10 C18 9 20 7 21 5"></path></svg>
+        </div>
+        <div class="highlight-title">手作體驗 · 竹香飄十里</div>
+      </div>
+      <p class="highlight-desc">竹子截下時的自然清香、蒸氣升騰時的滿室米香，是山林給予我們最溫柔的餽贈。</p>
+    </div>
+  </div>
+
+  <!-- 以下為活動亮點卡片點擊後彈窗顯示的詳細內容，平常隱藏 -->
+  <div data-detail-source="detail-feast" hidden>
+    <h3 class="detail-title">全日舌尖饗宴</h3>
+    <p class="detail-desc">從白天到夜晚，味蕾的旅程沒有間斷。特色餐車輪番進駐，現點現做的美味外燴溫暖每一餐；午後時分享用精緻下午茶，微醺前先用消暑冰品沁涼一下。不管什麼時間走進園區，總有一份美味等著你。</p>
+  </div>
+  <div data-detail-source="detail-party" hidden>
+    <h3 class="detail-title">微醺派對 &amp; 啤酒遊戲</h3>
+    <p class="detail-desc">當夜幕低垂、星光灑落，就是微醺派對的開場時刻。特調飲品與啤酒無限暢飲，搭配一場又一場歡樂刺激的啤酒互動遊戲，讓平常拘謹的距離，在笑聲與乾杯聲中悄悄拉近。</p>
+  </div>
+  <div data-detail-source="detail-music" hidden>
+    <h3 class="detail-title">Live Music 不插電演出</h3>
+    <p class="detail-desc">午後山風徐徐吹來，不插電的吉他與歌聲隨風流淌，沒有喧囂的音響，只有最純粹的旋律陪伴。找一個舒服的角落坐下，讓音樂成為這趟旅程最溫柔的背景。</p>
+  </div>
+  <div data-detail-source="detail-hunt" hidden>
+    <h3 class="detail-title">山林尋寶挑戰</h3>
+    <p class="detail-desc">線索悄悄藏在營位與步道之間，等待細心的你去發現。這是一場考驗觀察力與默契的探索遊戲，邀請你和夥伴們一起穿梭園區各個角落，在尋找答案的過程中，意外收穫更多驚喜。</p>
+  </div>
+  <div data-detail-source="detail-craft" hidden>
+    <div class="craft-single-card">
+      <h3 class="craft-title-main">星野野宴，竹香飄十里</h3>
+      <p style="color:rgba(217,161,93,0.8);font-size:0.9rem;margin-bottom:16px;">一段由竹香、蒸氣與糯米交織的野趣體驗</p>
+      <div class="craft-prose">
+        竹子截下時的自然清香、蒸氣升騰時的滿室米香，是山林給予我們最溫柔的餽贈。邀請您與家人、夥伴們一同走入山林享受手作的樂趣。親手鋸竹，將香糯的米飯與配料塞入新鮮竹筒中，封口後隨著熱氣溫柔蒸煮，靜靜等待竹香與米香交融。這不僅是一道道地野趣料理，更是我們在星野下共同堆疊的美味記憶。
+      </div>
+      <div class="craft-meta-grid">
+        <div class="craft-meta-item">
+          <strong>活動時間</strong>
+          9/12 (六) 14:30 – 16:30
+          <p>(提早10分集合)</p>
+        </div>
+        <div class="craft-meta-item">
+          <strong>體驗地點</strong>
+          下營區 · 晴雨教室
+        </div>
+        <div class="craft-meta-item">
+          <strong>參加方式</strong>
+          <p>事先報名制</p>
+          <p>（8/31已截止報名）</p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -737,94 +917,16 @@ section{
   </div>
 </section>
 
-<!-- ============ CRAFTS ============ -->
-<section id="crafts">
-  <p class="poetic-lead gs-reveal">—— 雙手記得的，比眼睛更久 ——</p>
-  <h2 class="section-title gs-reveal">手作體驗</h2>
-  <p class="section-subtitle gs-reveal">Craft Workshop</p>
-  
-  <div class="card craft-single-card gs-reveal">
-    <h3 class="craft-title-main">星野野宴，竹香飄十里</h3>
-    <p style="color:rgba(217,161,93,0.8);font-size:0.9rem;margin-bottom:16px;">一段由竹香、蒸氣與糯米交織的野趣體驗</p>
-    <div class="craft-prose">
-      竹子截下時的自然清香、蒸氣升騰時的滿室米香，是山林給予我們最溫柔的餽贈。邀請您與家人、夥伴們一同走入山林享受手作的樂趣。親手鋸竹，將香糯的米飯與配料塞入新鮮竹筒中，封口後隨著熱氣溫柔蒸煮，靜靜等待竹香與米香交融。這不僅是一道道地野趣料理，更是我們在星野下共同堆疊的美味記憶。
-    </div>
-    <div class="craft-meta-grid">
-      <div class="craft-meta-item">
-        <strong>活動時間</strong>
-        9/12 (六) 14:30 – 16:30 
-        <p>(提早10分集合)</p>
-      </div>
-      <div class="craft-meta-item">
-        <strong>體驗地點</strong>
-        下營區 · 晴雨教室
-      </div>
-      <div class="craft-meta-item">
-        <strong>參加方式</strong>
-        <p>事先報名制</p>
-        <p>（8/31已截止報名）</p>
-      </div>
-    </div>
+<!-- ============ ACTIVITY FLOW ============ -->
+<section id="flow">
+  <p class="poetic-lead gs-reveal">—— 精彩節奏，一手掌握 ——</p>
+  <h2 class="section-title gs-reveal">活動流程圖</h2>
+  <p class="section-subtitle gs-reveal">Activity Flow</p>
+
+  <div class="visual-wrapper lb-hint-wrap gs-reveal">
+    <img src="images/activity-flow.webp" alt="星野微醺兩天一夜活動流程圖" loading="lazy" data-lightbox>
   </div>
-</section>
-
-<!-- ============ HIGHLIGHTS ============ -->
-<section id="highlights">
-  <p class="poetic-lead gs-reveal">—— 每一刻停留，都是專屬回憶 ——</p>
-  <h2 class="section-title gs-reveal">活動亮點</h2>
-  <p class="section-subtitle gs-reveal">Event Highlights</p>
-  
-  <div class="highlights-grid">
-    <div class="card highlight-card gs-reveal">
-      <div class="highlight-head">
-        <div class="highlight-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 11 L3 3 M7 11 L7 3 M5 3 L5 11"/><path d="M3 11 L7 11"/><path d="M5 11 L5 21"/><path d="M17 3 C17 3 15 7 15 11 L19 11 C19 7 17 3 17 3Z"/><path d="M17 11 L17 21"/></svg>
-        </div>
-        <div class="highlight-title">全日舌尖饗宴</div>
-      </div>
-      <p class="highlight-desc">特色餐車巡禮、美味外燴、精緻下午茶與消暑冰品，全天候滿足味蕾。</p>
-    </div>
-
-    <div class="card highlight-card gs-reveal">
-      <div class="highlight-head">
-        <div class="highlight-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M8 21h8m-4-4v4M6 4h12l-2 9H8L6 4z"/></svg>
-        </div>
-        <div class="highlight-title">微醺派對 &amp; 啤酒遊戲</div>
-      </div>
-      <p class="highlight-desc">星空下的 Cheers Time！特調與啤酒無限暢飲，搭配超嗨啤酒互動挑戰！</p>
-    </div>
-
-    <div class="card highlight-card gs-reveal">
-      <div class="highlight-head">
-        <div class="highlight-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
-        </div>
-        <div class="highlight-title">Live Music 不插電演出</div>
-      </div>
-      <p class="highlight-desc">午後山風伴隨悠揚琴聲與旋律，讓歌聲流淌在山谷的每一個角落。</p>
-    </div>
-
-    <div class="card highlight-card gs-reveal">
-      <div class="highlight-head">
-        <div class="highlight-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-        </div>
-        <div class="highlight-title">山林尋寶挑戰</div>
-      </div>
-      <p class="highlight-desc">穿梭於營位與山間步道，解開藏在園區裡的驚喜線索。</p>
-    </div>
-
-    <div class="card highlight-card gs-reveal" style="grid-column: 1 / -1;">
-      <div class="highlight-head">
-        <div class="highlight-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#D9A15D" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21 V7 L16 4 V21 Z M8 12 H16"></path><path d="M16 10 C18 9 20 7 21 5"></path></svg>
-        </div>
-        <div class="highlight-title">手作體驗 · 竹香飄十里</div>
-      </div>
-      <p class="highlight-desc">竹子截下時的自然清香、蒸氣升騰時的滿室米香，是山林給予我們最溫柔的餽贈。</p>
-    </div>
-  </div>
+  <p class="visual-desc gs-reveal">點擊圖片可放大檢視手繪行程圖</p>
 </section>
 
 <!-- ============ MAP ============ -->
@@ -832,23 +934,48 @@ section{
   <p class="poetic-lead gs-reveal">—— 每一條小路，都通往一段故事 ——</p>
   <h2 class="section-title gs-reveal">園區導覽</h2>
   <p class="section-subtitle gs-reveal">Camp Map &middot; 含營位配置</p>
-  
+
   <div class="visual-wrapper lb-hint-wrap gs-reveal">
     <img src="images/camp-map.webp" alt="不遠山莊園區導覽與營位配置圖" loading="lazy" data-lightbox>
   </div>
   <p class="visual-desc gs-reveal">點擊圖片可放大檢視詳細營位與分區</p>
 </section>
 
-<!-- ============ ACTIVITY FLOW ============ -->
-<section id="flow">
-  <p class="poetic-lead gs-reveal">—— 精彩節奏，一手掌握 ——</p>
-  <h2 class="section-title gs-reveal">活動流程圖</h2>
-  <p class="section-subtitle gs-reveal">Activity Flow</p>
-  
-  <div class="visual-wrapper lb-hint-wrap gs-reveal">
-    <img src="images/activity-flow.webp" alt="星野微醺兩天一夜活動流程圖" loading="lazy" data-lightbox>
+<!-- ============ CAMP CHARTS（營區圖：接駁車次圖、帳篷配置圖上/下營區） ============ -->
+<section id="charts">
+  <p class="poetic-lead gs-reveal">—— 每一張圖，都是安心出發的指南 ——</p>
+  <h2 class="section-title gs-reveal">營區圖資</h2>
+  <p class="section-subtitle gs-reveal">Camp Charts</p>
+
+  <div class="schedule-container gs-reveal">
+    <!-- Chart Switch Tabs -->
+    <div class="chart-switch-tabs">
+      <button class="chart-tab-btn active" data-chart="chart-shuttle">接駁車次圖</button>
+      <button class="chart-tab-btn" data-chart="chart-tent-upper">帳篷配置圖・上營區</button>
+      <button class="chart-tab-btn" data-chart="chart-tent-lower">帳篷配置圖・下營區</button>
+    </div>
+
+    <div class="chart-blocks-wrapper">
+      <div class="chart-block active" id="chart-shuttle">
+        <div class="visual-wrapper lb-hint-wrap">
+          <img src="images/shuttle-route.webp" alt="接駁車次圖" loading="lazy" data-lightbox>
+        </div>
+        <p class="visual-desc">點擊圖片可放大檢視接駁車次資訊</p>
+      </div>
+      <div class="chart-block" id="chart-tent-upper">
+        <div class="visual-wrapper lb-hint-wrap">
+          <img src="images/tent-layout-upper.webp" alt="帳篷配置圖 - 上營區" loading="lazy" data-lightbox>
+        </div>
+        <p class="visual-desc">點擊圖片可放大檢視上營區帳篷配置</p>
+      </div>
+      <div class="chart-block" id="chart-tent-lower">
+        <div class="visual-wrapper lb-hint-wrap">
+          <img src="images/tent-layout-lower.webp" alt="帳篷配置圖 - 下營區" loading="lazy" data-lightbox>
+        </div>
+        <p class="visual-desc">點擊圖片可放大檢視下營區帳篷配置</p>
+      </div>
+    </div>
   </div>
-  <p class="visual-desc gs-reveal">點擊圖片可放大檢視手繪行程圖</p>
 </section>
 
 <!-- ============ NOTICE & INFO ============ -->
@@ -1028,6 +1155,44 @@ section{
     });
   });
 
+  /* === Chart Switcher Logic（營區圖：接駁車次圖／帳篷配置圖上下營區，跟 Day 切換各自獨立） === */
+  var chartTabs = document.querySelectorAll('.chart-tab-btn');
+  var chartBlocks = document.querySelectorAll('.chart-block');
+  chartTabs.forEach(function(tab){
+    tab.addEventListener('click', function(){
+      var targetChart = tab.dataset.chart;
+      chartTabs.forEach(function(t){ t.classList.remove('active'); });
+      chartBlocks.forEach(function(b){ b.classList.remove('active'); });
+      tab.classList.add('active');
+      var activeBlock = document.getElementById(targetChart);
+      if(activeBlock) activeBlock.classList.add('active');
+    });
+  });
+
+  /* === Activity Detail Modal（活動亮點卡片點擊出現介紹視窗） === */
+  var detailOverlay = document.getElementById('detail-overlay');
+  var detailContent = document.getElementById('detail-content');
+  var detailClose   = document.getElementById('detail-close');
+
+  function openDetail(key){
+    var source = document.querySelector('[data-detail-source="' + key + '"]');
+    if(!source || !detailOverlay || !detailContent) return;
+    detailContent.innerHTML = source.innerHTML;
+    detailOverlay.classList.add('detail-active');
+  }
+  function closeDetail(){
+    if(detailOverlay) detailOverlay.classList.remove('detail-active');
+  }
+  document.querySelectorAll('[data-detail]').forEach(function(card){
+    card.addEventListener('click', function(){ openDetail(card.dataset.detail); });
+  });
+  if(detailClose) detailClose.addEventListener('click', closeDetail);
+  if(detailOverlay){
+    detailOverlay.addEventListener('click', function(e){
+      if(e.target === detailOverlay) closeDetail();
+    });
+  }
+
   /* === Navigation Smooth Scroll & Active State === */
   var navItems = document.querySelectorAll('.side-nav-item');
   var sections = document.querySelectorAll('section[id]');
@@ -1037,10 +1202,8 @@ section{
     item.addEventListener('click', function(){
       var t = document.getElementById(item.dataset.target);
       if(!t) return;
-      /* 電腦版：直接跳到該頁面，不要有捲動過程；手機維持原本的平滑捲動
-         注意：'auto' 其實是「照 CSS scroll-behavior 決定」，html 有設 smooth 所以 auto 也會變成平滑捲動，
-         必須明確用 'instant' 才會真正無視 scroll-behavior、強制瞬間跳轉 */
-      t.scrollIntoView({ behavior: desktopNavOnlyMQ.matches ? 'instant' : 'smooth', block: 'start' });
+      /* 點導覽列一律瞬間跳轉（不分手機/電腦）；一般用滾輪/觸控滑動不受影響，還是正常捲動 */
+      t.scrollIntoView({ behavior: 'instant', block: 'start' });
     });
   });
 
@@ -1142,7 +1305,7 @@ section{
     if(e.target === lbOverlay && !lbDidDrag) closeLightbox();
   });
   document.addEventListener('keydown', function(e){
-    if(e.key === 'Escape') closeLightbox();
+    if(e.key === 'Escape'){ closeLightbox(); closeDetail(); }
   });
 
   /* ---- Desktop: 滾輪縮放 ---- */
