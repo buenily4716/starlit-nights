@@ -151,47 +151,45 @@ section{
   align-items:center;justify-content:center;
 }
 .hero-badge{
-  font-family: 'LXGW WenKai TC', cursive; /* 搭配毛筆字的文人手寫感字體 */
+  font-family: 'LXGW WenKai TC', cursive;
   font-size: 0.92rem;
-  color: #F8F3E8; /* 溫潤米白字，清晰且柔和 */
-  letter-spacing: 0.18em;
-  background: rgba(217, 161, 93, 0.12); /* 圖片同款琥珀金半透明底色 */
+  color: #F8F3E8;
+  /* 移除整體的 letter-spacing，避免推擠右側星星產生不對稱 */
+  background: rgba(217, 161, 93, 0.12);
   border: 1px solid rgba(217, 161, 93, 0.45);
   border-radius: 9999px;
-  padding: 6px 22px;
+  padding: 6px 20px;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
   box-shadow: 0 0 16px rgba(217, 161, 93, 0.2);
-  margin-top: -40px;    /* 保留你的往上移位置 */
-  margin-bottom: 24px;  /* 保持與下方標題圖片的間距 */
+  margin-top: -45px;
+  margin-bottom: 24px;
 }
 
-/* 左側裝飾：呼應圖片散落的金色光點 */
-.hero-badge::before{
-  content: '✦';
-  color: #D9A15D;
-  font-size: 1rem;
-  line-height: 1;
-  text-shadow: 0 0 6px rgba(217, 161, 93, 0.9);
-}
-
-/* 右側裝飾：呼應圖片右下角的四芒星芒 */
+/* 讓左右兩顆星星的大小、行高、垂直置中完全一致 */
+.hero-badge::before,
 .hero-badge::after{
   content: '✦';
   color: #D9A15D;
-  font-size: 0.82rem;
+  font-size: 0.85rem;
   line-height: 1;
-  text-shadow: 0 0 8px rgba(217, 161, 93, 0.9);
+  text-shadow: 0 0 7px rgba(217, 161, 93, 0.9);
+  display: flex;
+  align-items: center;
 }
 
-/* 手機版字級與間距微調 */
+/* 手機版同步等比例縮減 */
 @media (max-width: 767px){
   .hero-badge{
     font-size: 0.82rem;
-    padding: 5px 18px;
-    letter-spacing: 0.12em;
+    padding: 5px 16px;
     gap: 8px;
+  }
+  .hero-badge::before,
+  .hero-badge::after{
+    font-size: 0.75rem;
   }
 }
 .hero-title{
