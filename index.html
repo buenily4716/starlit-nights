@@ -132,8 +132,6 @@ section{
 }
 .hero-bg{
   position:absolute;inset:0;
-  /* 底部提早加深到接近全不透明，讓底圖在快接近下一個區塊之前就先融入純色背景，
-     消除捲動到下一個主題時中間那段「圖片忽然變成一片純色」的斷層／夾層感 */
   background:linear-gradient(180deg,rgba(13,27,61,0.35) 0%,rgba(13,27,61,0.5) 40%,rgba(13,27,61,0.85) 70%,rgba(13,27,61,0.98) 100%);
   z-index:0;
 }
@@ -218,10 +216,9 @@ section{
   max-width: clamp(280px, 80vw, 560px);
   height: auto;
   display: block;
-  filter: 
-    drop-shadow(0 0 1.5px rgba(248, 243, 232, 0.75))
-    drop-shadow(0 0 6px rgba(217, 161, 93, 0.65))
-    drop-shadow(0 0 15px rgba(217, 161, 93, 0.3));
+filter: 
+  drop-shadow(0 0 1px rgba(248, 243, 232, 0.5))
+  drop-shadow(0 0 6px rgba(217, 161, 93, 0.35));
 }
 @media (max-width: 767px) {
   .hero-inner {
@@ -241,7 +238,6 @@ section{
   border-color:var(--c-card-border-hover);
   box-shadow:0 0 16px rgba(217,161,93,0.18);
 }
-/* 觸控裝置：毛玻璃模糊在捲動時會強迫瀏覽器逐幀重新合成，是行動裝置卡頓主因之一，改用純色背景 */
 @media (pointer:coarse){
   .card{
     background:rgba(13,27,61,0.72);
@@ -299,9 +295,6 @@ section{
 .day-blocks-wrapper{
   display:block;
 }
-/* 改用 display:none/block 直接切換，不用 opacity/visibility 疊在同一格淡出——
-   後者在部分手機瀏覽器上會有殘影不重繪的問題，display 切換會讓元素直接從畫面上消失，
-   瀏覽器不會有不重繪的模糊地帶 */
 .day-block{
   display:none;
 }
@@ -406,8 +399,6 @@ section{
   text-align:center;font-size:0.82rem;color:rgba(217,161,93,0.7);margin-top:10px;
 }
 
-/* 電腦版：流程圖是直式長圖，改成「點導覽列換頁」後圖片必須整張塞進一個畫面，
-   改以高度為準縮放（寬度自動等比縮小），外框直接貼齊圖片本身、不再拉滿容器寬度 */
 @media(min-width:768px){
   #flow .visual-wrapper,
   #charts .visual-wrapper{
@@ -569,14 +560,8 @@ section{
   text-align:justify;text-justify:inter-ideograph;
 }
 
-/* === Scroll Reveal ===
-   以原生 IntersectionObserver + CSS transition 取代 GSAP ScrollTrigger：
-   不必在每個 scroll 事件裡重新量測元素位置，瀏覽器只在真正需要時通知一次，
-   快速滑動時幾乎沒有額外負擔。 */
 .gs-reveal{
   opacity:0;
-  /* 只做淡入，不再同時做位移(transform)動畫——區塊交界處剛好是進場動畫觸發、
-     同時也是 scroll-snap 收尾吸附的瞬間，兩個屬性一起變動比單純淡入更容易讓那一刻感覺卡 */
   transition:opacity 0.4s ease-out;
 }
 .gs-reveal.gs-in{
@@ -586,8 +571,6 @@ section{
   .gs-reveal{transition:none;opacity:1;transform:none}
 }
 
-/* === Loading 遮罩：讓字型／首屏圖片／初次渲染都準備好後才開放操作，
-   剛載入時的暖機成本全部發生在遮罩底下，使用者看不到、也不會在那個時間點捲動 === */
 #page-loader{
   position:fixed;inset:0;z-index:9999;
   background:#0D1B3D;
@@ -606,7 +589,7 @@ section{
   animation:spinLoader 0.8s linear infinite;
 }
 .loader-text{
-  font-family:'Noto Sans TC',sans-serif; /* 用完整字集的字型，避免精簡過的 LXGW WenKai TC 缺字 */
+  font-family:'Noto Sans TC',sans-serif; 
   color:#D9A15D;font-size:1rem;letter-spacing:0.15em;
 }
 @keyframes spinLoader{ to{ transform:rotate(360deg); } }
